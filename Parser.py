@@ -2,6 +2,7 @@ __author__ = 'shaj'
 
 import re
 import Regexes
+import Queries
 
 class Parser:
     #Constant words
@@ -169,7 +170,7 @@ class Parser:
         #courseNum = None
         if course_matched:
             courseNum = self.find_course_num(course_matched)
-            timeAndPlace = self.find_class_time_place(str_to_parse, courseNum)
+            timeAndPlace = self.find_class_time_place(st_id, courseNum)
             # return the course_name that appears
             pass
         elif next_c.match(str_to_parse):
@@ -212,20 +213,25 @@ class Parser:
         pass
 
     # TODO implemets the search from the DB
-    def find_class_time_place(self, str_to_parse, courseNum):
+    def find_class_time_place(self, st_id, courseNum):
         #print "inside find_class_time_place() with courseNum : " + str(courseNum)        # delete
         #print "the str to parse is: " + str_to_parse
-        #--------------------------------------------------------------------------#
-        ta_c = re.compile('|'.join(self.TA_SYN))
-        lecture_c = re.compile('|'.join(self.LECTURE_SYN))
-        if ta_c.match(str_to_parse):
-            return self.find_TA_time_place(courseNum)
-        #if lecture_c.match(str_to_parse):
-            #return self.find_lecture_time_place(courseNum)
-        # DEFAULT:
-        return self.find_lecture_time_place(courseNum)
-        # returns the time and place of the next class in the course with the given number
-        pass
+        #-----for now--------#
+        q_answer = Queries.get_course_time_date(st_id, course_num)
+        str_answer = ""
+        for row in q_answer:
+            str_answer = str_answer + " ".join(map(str,row))
+        return str_answer
+        # #-----------------for a time when we have time---------------------------------------------------------#
+        # ta_c = re.compile('|'.join(self.TA_SYN))
+        # lecture_c = re.compile('|'.join(self.LECTURE_SYN))
+        # if ta_c.match(str_to_parse):
+        #     return self.find_TA_time_place(courseNum)
+        # #if lecture_c.match(str_to_parse):
+        #     #return self.find_lecture_time_place(courseNum)
+        # # DEFAULT:
+        # return self.find_lecture_time_place(courseNum)
+        # # returns the time and place of the next class in the course with the given number
 
     # TODO implemets the search from the DB
     def find_TA_time_place(self, courseNum):
