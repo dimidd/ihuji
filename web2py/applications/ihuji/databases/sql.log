@@ -97,3 +97,25 @@ CREATE TABLE hall(
     name CHAR(512)
 );
 success!
+timestamp: 2015-04-30T16:42:18.402962
+CREATE TABLE students(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    phone CHAR(512)
+);
+success!
+timestamp: 2015-04-30T16:46:09.561509
+CREATE TABLE exam(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    co_id INTEGER REFERENCES course (id) ON DELETE CASCADE,
+    hdate CHAR(512),
+    hhour CHAR(512),
+    ha_id INTEGER REFERENCES hall (id) ON DELETE CASCADE,
+    moed INTEGER
+);
+success!
+timestamp: 2015-04-30T16:46:09.610953
+CREATE TABLE studentCourse(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    gr_id INTEGER REFERENCES hgroup (id) ON DELETE CASCADE
+);
+success!
