@@ -122,5 +122,17 @@ db.define_table('exam',
     Field('moed', 'integer')
 )
 
+
+db.define_table('hgroup',
+    Field('gr_id', 'integer'),
+    Field('co_id', 'integer'),
+    Field('lesson', 'string'),
+)
+
+db.define_table('hall',
+    Field('ha_id', 'integer'),
+    Field('name','string')
+)
+
 ## after defining tables, uncomment below to enable auditing
 auth.enable_record_versioning(db)
