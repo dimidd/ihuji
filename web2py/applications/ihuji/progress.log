@@ -1,1 +1,15 @@
 [2015-04-30 12:25:55] START
+[2015-04-30 12:36:22] EDIT ihuji/models/db.py: 4
+[2015-04-30 12:37:26] EDIT ihuji/models/db.py: 0
+[2015-04-30 12:37:34] EDIT ihuji/models/db.py: 0
+[2015-04-30 12:40:22] EDIT ihuji/models/db.py: 0
+[2015-04-30 12:41:43] EDIT ihuji/models/db.py: 0
+[2015-04-30 12:42:43] EDIT ihuji/models/db.py: 0
+[2015-04-30 12:42:55] EDIT ihuji/models/db.py: 0
+[2015-04-30 12:43:07] EDIT ihuji/models/db.py: 0
+[2015-04-30 13:21:04] EDIT ihuji/models/db.py: 0
+[2015-04-30 16:54:16] CREATE sms.py: 0
+[2015-04-30 16:54:54] EDIT ihuji/controllers/sms.py: 6
+[2015-04-30 17:05:26] CREATE sms/index.html: 0
+[2015-04-30 17:06:04] EDIT ihuji/views/sms/index.html: -1
+[2015-04-30 18:15:57] EDIT ihuji/controllers/sms.py: 0
