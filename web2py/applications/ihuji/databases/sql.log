@@ -81,3 +81,12 @@ success!
 timestamp: 2015-04-30T14:54:57.453574
 ALTER TABLE course ADD var CHAR(512);
 success!
+timestamp: 2015-04-30T15:47:11.005403
+CREATE TABLE hgroup(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    gr_id INTEGER,
+    co_id INTEGER REFERENCES course (id) ON DELETE CASCADE,
+    lesson CHAR(512)
+);
+success!
+success!

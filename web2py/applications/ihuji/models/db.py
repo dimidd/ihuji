@@ -106,5 +106,12 @@ db.define_table('course',
     Field('var', 'string')
 )
 
+
+db.define_table('hgroup',
+    Field('gr_id', 'integer'),
+    Field('co_id', 'integer'),
+    Field('lesson', 'string'),
+)
+
 ## after defining tables, uncomment below to enable auditing
 auth.enable_record_versioning(db)
