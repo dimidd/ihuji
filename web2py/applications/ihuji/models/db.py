@@ -88,5 +88,23 @@ auth.settings.reset_password_requires_verification = True
 ## >>> for row in rows: print row.id, row.myfield
 #########################################################################
 
+db.define_table('sms',
+                Field('num', 'string'),
+                Field('body', 'text')
+)
+
+db.define_table('course',
+    Field('co_id', 'integer'),
+    Field('name', 'string'),
+    Field('name_eng', 'string'),
+    Field('semseter', 'string'),
+    Field('hug', 'string'),
+    Field('lesson', 'string'),
+    Field('points', 'string'),
+    Field('hours', 'string'),
+    Field('exam_type', 'string'),
+    Field('var', 'string')
+)
+
 ## after defining tables, uncomment below to enable auditing
-# auth.enable_record_versioning(db)
+auth.enable_record_versioning(db)
