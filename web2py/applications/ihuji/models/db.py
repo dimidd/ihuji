@@ -106,7 +106,7 @@ db.define_table('course',
     Field('var', 'string')
 )
 
-db.define_table('students',
+db.define_table('student',
     Field('phone', 'string')
 )
 
@@ -117,22 +117,39 @@ db.define_table('hall',
 
 db.define_table('exam',
     Field('co_id', db.course),
-    Field('hdate', 'string'),
-    Field('hhour', 'string' ),
+    Field('edate', 'string'),
+    Field('ehour', 'string' ),
     Field('ha_id', db.hall),
     Field('moed', 'integer')
 )
 
 db.define_table('hgroup',
     Field('gr_id', 'integer'),
-    Field('co_id', 'integer'),
+    Field('co_id', db.course),
     Field('lesson', 'string'),
 )
 
 
 db.define_table('studentCourse',
-    Field('id', db.students),
-    Field('gr_id', db.hgroup )
+    Field('aid', 'integer'),
+    Field('g_id','integer')
 )
+# For Now:
+#---------------
+
+db.hgroup.bulk_insert([{'gr_id':'8268511', 'co_id':'1070', 'lesson':'שות'},{'gr_id':'8268512', 'co_id':'1075', 'lesson':'שות'},{'gr_id':'8268513', 'co_id':'1083', 'lesson':'שות'},{'gr_id':'8268514', 'co_id':'1084', 'lesson':'שות'},{'gr_id':'8268515', 'co_id':'1100', 'lesson':'שות'}])
+#
+#db.student.bulk_insert([{'phone':'+9720546384009'},{'phone':'+972528899222'},{'phone':'+972547314447'}])
+db.exam.bulk_insert([{'co_id':'1043','edate':'10/10/15','ehour': '13:00','ha_id':'30', 'moed':'1'}, {'co_id':'1044','edate':'10/10/15','ehour': '16:00','ha_id':'31', 'moed':'1'}, {'co_id':'1061','edate':'10/10/15','ehour': '16:00','ha_id':'32', 'moed':'1'}, {'co_id':'1065','edate':'10/10/15','ehour': '13:00','ha_id':'33', 'moed':'1'}, {'co_id':'1065','edate':'10/10/15','ehour': '16:00','ha_id':'34', 'moed':'1'}, {'co_id':'1066','edate':'10/10/15','ehour': '16:00','ha_id':'35', 'moed':'1'}, {'co_id':'1070','edate':'10/10/15','ehour': '13:00','ha_id':'35', 'moed':'1'}] )
+
+
+#myset = db(db.hgroup.co_id == 	1070)
+#myset.select()
+#myset.update(gr_id = 8268511)
+#
+
+
+#-----------
+db.studentCourse.bulk_insert([{'aid':'1', 'g_id':'8268511'},{'aid':'2', 'g_id':'8268512'},{'aid':'3', 'g_id':'8268513'},{'aid':'1', 'g_id':'8268514'},{'aid':'2', 'g_id':'8268515'}])
 ## after defining tables, uncomment below to enable auditing
 auth.enable_record_versioning(db)
