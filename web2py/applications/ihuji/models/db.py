@@ -113,5 +113,10 @@ db.define_table('hgroup',
     Field('lesson', 'string'),
 )
 
+db.define_table('hall',
+    Field('ha_id', 'integer'),
+    Field('name','string')
+)
+
 ## after defining tables, uncomment below to enable auditing
 auth.enable_record_versioning(db)

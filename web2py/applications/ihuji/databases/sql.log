@@ -90,3 +90,10 @@ CREATE TABLE hgroup(
 );
 success!
 success!
+timestamp: 2015-04-30T16:35:51.696672
+CREATE TABLE hall(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ha_id INTEGER,
+    name CHAR(512)
+);
+success!
