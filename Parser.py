@@ -20,8 +20,8 @@ class Parser:
     # Parses a string relative to the given student id
     def str_parser(self, str_to_parse, st_id):
 
-        print "Hello, I'm a parser"         # delete
-        print """You sent me: '""" + str_to_parse + """' and id: """ + str(st_id)         # delete
+        #print "Hello, I'm a parser"         # delete
+        #print """You sent me: '""" + str_to_parse + """' and id: """ + str(st_id)         # delete
 
         #Search for one of the constant words
         # if matched with exam_syn -> parse_exam(str_to_parse, st_id)
@@ -29,37 +29,43 @@ class Parser:
 
         str_to_parse = str.lower(str_to_parse).strip()
 
-        print "the lower-cased str: " + str_to_parse        # delete
+        #print "the lower-cased str: " + str_to_parse        # delete
 
         exam_c = re.compile(Regexes.EXAM_MASSAGE)
         class_c = re.compile(Regexes.CLASS_MASSAGE)
         grade_c = re.compile(Regexes.GRADE_MASSAGE)
         vote_c = re.compile(Regexes.VOTE_MASSAGE)
 
-        print "compiled things...."        # delete
+        #print "compiled things...."        # delete
 
         #print class_c.match(str_to_parse)
 
         #exam_c = re.compile("exam"|"moed"|"test")
         #class_c = re.compile("class"|"lecture"|"shiur"|"tirgul"|"ta")
         if vote_c.match(str_to_parse):
-            print "vote matched...."        # delete
+            #print "vote matched...."        # delete
             self.parse_vote(str_to_parse, st_id)
+            return "A vote query"
         elif grade_c.match(str_to_parse):
-            print "grade matched...."        # delete
+            #print "grade matched...."        # delete
             self.parse_grade(str_to_parse, st_id)
+            return "A grade query"
         elif exam_c.match(str_to_parse):
-            print "exam matched...."        # delete
+            #print "exam matched...."        # delete
             self.parse_exam(str_to_parse, st_id)
+            return "An exam query"
         elif class_c.match(str_to_parse):
-            print "class matched...."        # delete
+            #print "class matched...."        # delete
+            
             # try:
             #     self.parse_class(str_to_parse, st_id)
             # except Exception as e:
             #     print e.message;
             self.parse_class(str_to_parse, st_id)
+            return "A class query"
         else:
             self.parse_unknown(str_to_parse, st_id)
+            return "YOU'VE SENT ME SOME UNKNOWN THINGS HERE..... CAN'T REALLY HELP YOU"
 
 
         # tiles = [[0 for i in xrange(7)] for j in xrange(4)]
@@ -90,15 +96,15 @@ class Parser:
         #     if c == 7:
         #         c = 0
         #         r += 1
-        return "good"
+        #return "good"
 
     def parse_vote(self, str_to_parse, st_id):
-        print "inside parse_vote() with id: " + str(st_id)  # delete
+        #print "inside parse_vote() with id: " + str(st_id)  # delete
         str_to_parse = str_to_parse["vote".__len__():].strip()
         course_c = re.compile(Regexes.LESSON_ID)
         course_num = course_c.findall(str_to_parse)
         str_to_parse = str_to_parse[int(Regexes.LESSON_ID_LENGTH):].strip()
-        print str_to_parse
+        #print str_to_parse
         vote_c = re.compile(Regexes.VOTE_VALUE)
         vote = vote_c.findall(str_to_parse)
 
@@ -114,7 +120,7 @@ class Parser:
 
 
     def parse_grade(self, str_to_parse, st_id):
-        print "inside parse_grade() with id: " + str(st_id)          # delete
+        #print "inside parse_grade() with id: " + str(st_id)          # delete
 
         course_names = self.find_student_courses_names(st_id)
         # if exist c in course_names
@@ -122,7 +128,7 @@ class Parser:
         course_matched = "".join(course_c.findall(str_to_parse)[0])
         if course_matched:
             courseNum = self.find_course_num(course_matched)
-            print "I'll go looking for your grade in course number " + str(courseNum)  # delete
+            #print "I'll go looking for your grade in course number " + str(courseNum)  # delete
             # return the course_name that appears
             pass
         else:
@@ -130,7 +136,7 @@ class Parser:
             pass
 
     def parse_exam(self, str_to_parse, st_id):
-        print "inside parse_exam() with id: " + str(st_id)           # delete
+        #print "inside parse_exam() with id: " + str(st_id)           # delete
 
         course_names = self.find_student_courses_names(st_id)
         course_c = re.compile('|'.join(course_names))
@@ -177,7 +183,7 @@ class Parser:
         pass
 
     def parse_unknown(self, str_to_parse, st_id):
-        print "YOU'VE SENT ME SOME UNKNOWN THINGS HERE..... CAN'T REALLY HELP YOU"
+        #print "YOU'VE SENT ME SOME UNKNOWN THINGS HERE..... CAN'T REALLY HELP YOU"
 
     # TODO implemets the search from the DB
     def find_student_courses_names(self, st_id):
@@ -189,7 +195,7 @@ class Parser:
     def find_course_num(self, course_name):
         # searches the number of the course with the given name
 
-        print "inside find_course_num with name: " + course_name             # delete
+        #print "inside find_course_num with name: " + course_name             # delete
 
         if course_name == "infi":
             return 1
@@ -202,13 +208,13 @@ class Parser:
     # TODO implemets the search from the DB
     def find_exam_time_place(self, courseNum):
         # returns the time and place of the next exam in the course with the given number
-        print "inside find_exam_time_place() with courseNum : " + str(courseNum)         # delete
+        #print "inside find_exam_time_place() with courseNum : " + str(courseNum)         # delete
         pass
 
     # TODO implemets the search from the DB
     def find_class_time_place(self, str_to_parse, courseNum):
-        print "inside find_class_time_place() with courseNum : " + str(courseNum)        # delete
-        print "the str to parse is: " + str_to_parse
+        #print "inside find_class_time_place() with courseNum : " + str(courseNum)        # delete
+        #print "the str to parse is: " + str_to_parse
         #--------------------------------------------------------------------------#
         ta_c = re.compile('|'.join(self.TA_SYN))
         lecture_c = re.compile('|'.join(self.LECTURE_SYN))
@@ -223,17 +229,17 @@ class Parser:
 
     # TODO implemets the search from the DB
     def find_TA_time_place(self, courseNum):
-        print "inside find_TA_time_place() with courseNum : " + str(courseNum)       # delete
+        #print "inside find_TA_time_place() with courseNum : " + str(courseNum)       # delete
         # finds when this student's TA is of the given course num
         pass
 
 
     # TODO implemets the search from the DB
     def find_lecture_time_place(self, courseNum):
-        print "inside find_lecture_time_place() with courseNum : " + str(courseNum)      # delete
+        #print "inside find_lecture_time_place() with courseNum : " + str(courseNum)      # delete
         # finds when this student's LECTURE is of the given course num
         pass
 
     # TODO implemets something on the teacher's computer ha ha ha!!!
     def mark_vote_at_course(self, grade, course_num):
-        print "inside mark_vote_at_course() with grade : " + str(grade) + " and course-num: " + str(course_num)     # delete
+        #print "inside mark_vote_at_course() with grade : " + str(grade) + " and course-num: " + str(course_num)     # delete
