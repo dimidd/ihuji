@@ -105,28 +105,9 @@ db.define_table('course',
     Field('exam_type', 'string'),
     Field('var', 'string')
 )
+
 db.define_table('students',
     Field('phone', 'string')
-)
-db.define_table('studentCourse',
-    Field('id', db.students),
-    Field ('name', db.course),
-    Field('gr_id', db.hgroup )
-
-)
-db.define_table('exam',
-    Field('co_id', db.course),
-    Field ('date', 'string'),
-    Field('hour', 'string' ),
-    Field('hall_id', db.hall),
-    Field('moed', 'integer')
-)
-
-
-db.define_table('hgroup',
-    Field('gr_id', 'integer'),
-    Field('co_id', 'integer'),
-    Field('lesson', 'string'),
 )
 
 db.define_table('hall',
@@ -134,5 +115,24 @@ db.define_table('hall',
     Field('name','string')
 )
 
+db.define_table('exam',
+    Field('co_id', db.course),
+    Field('hdate', 'string'),
+    Field('hhour', 'string' ),
+    Field('ha_id', db.hall),
+    Field('moed', 'integer')
+)
+
+db.define_table('hgroup',
+    Field('gr_id', 'integer'),
+    Field('co_id', 'integer'),
+    Field('lesson', 'string'),
+)
+
+
+db.define_table('studentCourse',
+    Field('id', db.students),
+    Field('gr_id', db.hgroup )
+)
 ## after defining tables, uncomment below to enable auditing
 auth.enable_record_versioning(db)
