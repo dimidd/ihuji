@@ -105,6 +105,22 @@ db.define_table('course',
     Field('exam_type', 'string'),
     Field('var', 'string')
 )
+db.define_table('students',
+    Field('phone', 'string')
+)
+db.define_table('studentCourse',
+    Field('id', db.students),
+    Field ('name', db.course),
+    Field('gr_id', db.hgroup )
+
+)
+db.define_table('exam',
+    Field('co_id', db.course),
+    Field ('date', 'string'),
+    Field('hour', 'string' ),
+    Field('hall_id', db.hall),
+    Field('moed', 'integer')
+)
 
 
 db.define_table('hgroup',
