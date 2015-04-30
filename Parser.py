@@ -4,7 +4,8 @@ import re
 import Regexes
 import Queries
 
-class Parser:
+
+class Parser_easy:
     #Constant words
     EXAM_SYN = ["exam", "moed", "test"]
     TA_SYN = ["tirgul", "ta"]
@@ -62,8 +63,8 @@ class Parser:
             #     self.parse_class(str_to_parse, st_id)
             # except Exception as e:
             #     print e.message;
-            self.parse_class(str_to_parse, st_id)
-            return "A class query"
+            return self.parse_class(str_to_parse, st_id)
+            #return "A class query"
         else:
             self.parse_unknown(str_to_parse, st_id)
             return "YOU'VE SENT ME SOME UNKNOWN THINGS HERE..... CAN'T REALLY HELP YOU"
@@ -171,8 +172,8 @@ class Parser:
         if course_matched:
             courseNum = self.find_course_num(course_matched)
             timeAndPlace = self.find_class_time_place(st_id, courseNum)
+            return timeAndPlace
             # return the course_name that appears
-            pass
         elif next_c.match(str_to_parse):
             pass
             #TODO later, dealing with times
@@ -185,6 +186,7 @@ class Parser:
 
     def parse_unknown(self, str_to_parse, st_id):
         #print "YOU'VE SENT ME SOME UNKNOWN THINGS HERE..... CAN'T REALLY HELP YOU"
+        pass
 
     # TODO implemets the search from the DB
     def find_student_courses_names(self, st_id):
@@ -217,10 +219,16 @@ class Parser:
         #print "inside find_class_time_place() with courseNum : " + str(courseNum)        # delete
         #print "the str to parse is: " + str_to_parse
         #-----for now--------#
-        q_answer = Queries.get_course_time_date(st_id, course_num)
+        #q_answer = [["tirgul", "Sunday", "10:00"], ["lecture", "Monday", "12:00"]]
+        q_answer = Queries.get_course_time_date(st_id, courseNum)
         str_answer = ""
+        len = q_answer.__len__()
+        i = 0
         for row in q_answer:
+            i += 1
             str_answer = str_answer + " ".join(map(str,row))
+            if i < len:
+                str_answer = str_answer + ", "
         return str_answer
         # #-----------------for a time when we have time---------------------------------------------------------#
         # ta_c = re.compile('|'.join(self.TA_SYN))
@@ -249,3 +257,4 @@ class Parser:
     # TODO implemets something on the teacher's computer ha ha ha!!!
     def mark_vote_at_course(self, grade, course_num):
         #print "inside mark_vote_at_course() with grade : " + str(grade) + " and course-num: " + str(course_num)     # delete
+        pass
