@@ -1,11 +1,9 @@
 __author__ = 'shaj'
 
-from 
 import re
 import Regexes
 
 class Parser:
-    DAL.__class__ = 5
     #Constant words
     EXAM_SYN = ["exam", "moed", "test"]
     TA_SYN = ["tirgul", "ta"]
@@ -14,8 +12,9 @@ class Parser:
     GRADE_SYN = ["grade", "score"]
     VOTE_SYN = ["vote"]
 
+    NOT_FOUND = -1
     NO_NAME_ERROR = "ERROR - COURSE NAME NOT SPECIFIED"
-
+    STOP_WORDS = ["hi", "hello", "i", "he", "she", "where", "when", "is", "at"]
     def __init__(self):
         pass
 
@@ -32,36 +31,69 @@ class Parser:
         str_to_parse = str.lower(str_to_parse).strip()
 
         print "the lower-cased str: " + str_to_parse        # delete
+        arr = re.split('\s+', str_to_parse)
+        #print "arr : "
+        #print arr
 
-        exam_c = re.compile(Regexes.EXAM_MASSAGE)
-        class_c = re.compile(Regexes.CLASS_MASSAGE)
-        grade_c = re.compile(Regexes.GRADE_MASSAGE)
-        vote_c = re.compile(Regexes.VOTE_MASSAGE)
+        for item in arr:
+            for w in self.STOP_WORDS:
+                if item == w:
+                    arr.remove(item)
+                else:
+                    item = item.strip()
+
+        # print "arr : "
+        # print arr
+
+        # VOTE!!!
+        location = self.find_element_in_list("vote", arr)
+        if location != self.NOT_FOUND:
+            self.parse_vote(arr.pop(location), st_id)
+            return "bla bla bla"
+        # GRADE!!!
+        # location = self.find_element_in_list('|'.join(self.GRADE_SYN), arr)
+        location = self.find_list_in_list(self.GRADE_SYN, arr)
+        if location != self.NOT_FOUND:
+            self.parse_grade(arr.pop(location), st_id)
+            return "bla bla bla"
+        # EXAM!!!
+        #location = self.find_element_in_list('|'.join(self.EXAM_SYN), arr)
+        location = self.find_list_in_list(self.EXAM_SYN, arr)
+        if location != self.NOT_FOUND:
+            self.parse_grade(arr.pop(location), st_id)
+            return "bla bla bla"
+        # CLASS!!!
+        #location = self.find_element_in_list('|'.join(self.CLASS_SYN), arr)
+        location = self.find_list_in_list(self.CLASS_SYN, arr)
+        location = self.find_element_in_list('class', arr)
+        if location != self.NOT_FOUND:
+            self.parse_grade(arr.pop(location), st_id)
+            return "bla bla bla"
+
 
         print "compiled things...."        # delete
 
         #print class_c.match(str_to_parse)
 
-        #exam_c = re.compile("exam"|"moed"|"test")
-        #class_c = re.compile("class"|"lecture"|"shiur"|"tirgul"|"ta")
-        if vote_c.match(str_to_parse):
-            print "vote matched...."        # delete
-            self.parse_vote(str_to_parse, st_id)
-        elif grade_c.match(str_to_parse):
-            print "grade matched...."        # delete
-            self.parse_grade(str_to_parse, st_id)
-        elif exam_c.match(str_to_parse):
-            print "exam matched...."        # delete
-            self.parse_exam(str_to_parse, st_id)
-        elif class_c.match(str_to_parse):
-            print "class matched...."        # delete
-            # try:
-            #     self.parse_class(str_to_parse, st_id)
-            # except Exception as e:
-            #     print e.message;
-            self.parse_class(str_to_parse, st_id)
-        else:
-            self.parse_unknown(str_to_parse, st_id)
+
+        # if vote_c.match(str_to_parse):
+        #     print "vote matched...."        # delete
+        #     self.parse_vote(str_to_parse, st_id)
+        # elif grade_c.match(str_to_parse):
+        #     print "grade matched...."        # delete
+        #     self.parse_grade(str_to_parse, st_id)
+        # elif exam_c.match(str_to_parse):
+        #     print "exam matched...."        # delete
+        #     self.parse_exam(str_to_parse, st_id)
+        # elif class_c.match(str_to_parse):
+        #     print "class matched...."        # delete
+        #     # try:
+        #     #     self.parse_class(str_to_parse, st_id)
+        #     # except Exception as e:
+        #     #     print e.message;
+        #     self.parse_class(str_to_parse, st_id)
+        # else:
+        #     self.parse_unknown(str_to_parse, st_id)
 
 
         # tiles = [[0 for i in xrange(7)] for j in xrange(4)]
@@ -94,7 +126,7 @@ class Parser:
         #         r += 1
         return "good"
 
-    def parse_vote(self, str_to_parse, st_id):
+    def parse_vote(self, arr, st_id):
         print "inside parse_vote() with id: " + str(st_id)  # delete
         str_to_parse = str_to_parse["vote".__len__():].strip()
         course_c = re.compile(Regexes.LESSON_ID)
@@ -125,6 +157,12 @@ class Parser:
         if course_matched:
             courseNum = self.find_course_num(course_matched)
             print "I'll go looking for your grade in course number " + str(courseNum)  # delete
+            # suggestion:
+            #-------------
+            # select grade
+            # from studentsCourses
+            # where co_id == courseNum
+
             # return the course_name that appears
             pass
         else:
@@ -205,6 +243,11 @@ class Parser:
     def find_exam_time_place(self, courseNum):
         # returns the time and place of the next exam in the course with the given number
         print "inside find_exam_time_place() with courseNum : " + str(courseNum)         # delete
+        # suggestion:
+        #-------------
+        # select grade
+        # from studentsCourses
+        # where co_id == courseNum
         pass
 
     # TODO implemets the search from the DB
@@ -239,3 +282,19 @@ class Parser:
     # TODO implemets something on the teacher's computer ha ha ha!!!
     def mark_vote_at_course(self, grade, course_num):
         print "inside mark_vote_at_course() with grade : " + str(grade) + " and course-num: " + str(course_num)     # delete
+
+    # Searches for an element in a list. Returns it's index, -1 otherwise.
+    def find_element_in_list(self, element, src_list):
+        for e in src_list:
+            if e == element:
+                return src_list.index(element)
+        return self.NOT_FOUND
+
+    # Searches for an appearance of any of the elements in a given list inside the src_list.
+    # Returns it's index, -1 otherwise.
+    def find_list_in_list(self, l, src_list):
+        for e in l:
+            loc = self.find_element_in_list(e, src_list)
+            if loc != self.NOT_FOUND:
+                return src_list.index(e)
+        return self.NOT_FOUND
