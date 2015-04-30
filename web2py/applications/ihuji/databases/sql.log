@@ -53,3 +53,31 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
+timestamp: 2015-04-30T12:43:22.096083
+CREATE TABLE sms(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    num CHAR(512),
+    body TEXT
+);
+success!
+timestamp: 2015-04-30T13:21:11.886572
+CREATE TABLE course(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    co_id INTEGER,
+    name CHAR(512),
+    name_eng CHAR(512),
+    semseter CHAR(512),
+    hug CHAR(512),
+    lesson CHAR(512),
+    points INTEGER,
+    hours INTEGER,
+    exam_type INTEGER
+);
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-04-30T14:54:57.453574
+ALTER TABLE course ADD var CHAR(512);
+success!
