@@ -5,7 +5,7 @@ import Regexes
 import Queries
 
 
-class Parser_easy:
+class Parser:
     #Constant words
     EXAM_SYN = ["exam", "moed", "test"]
     TA_SYN = ["tirgul", "ta"]
