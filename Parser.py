@@ -3,6 +3,7 @@ __author__ = 'shaj'
 import re
 import Regexes
 import Queries
+import createConection
 
 
 class Parser:
@@ -218,7 +219,7 @@ class Parser:
         #print "the str to parse is: " + str_to_parse
         #-----for now--------#
         #q_answer = [["tirgul", "Sunday", "10:00"], ["lecture", "Monday", "12:00"]]
-        q_answer = Queries.get_course_time_date(st_id, courseNum)
+        q_answer = createConection.search_class_ta(st_id, courseNum)
         str_answer = ""
         len = q_answer.__len__()
         i = 0
