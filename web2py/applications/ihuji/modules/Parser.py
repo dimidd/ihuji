@@ -46,16 +46,13 @@ class Parser:
         #class_c = re.compile("class"|"lecture"|"shiur"|"tirgul"|"ta")
         if vote_c.match(str_to_parse):
             #print "vote matched...."        # delete
-            self.parse_vote(str_to_parse, st_id)
-            return "A vote query"
+            return self.parse_vote(str_to_parse, st_id)
         elif grade_c.match(str_to_parse):
             #print "grade matched...."        # delete
-            self.parse_grade(str_to_parse, st_id)
-            return "A grade query"
+            return self.parse_grade(str_to_parse, st_id)
         elif exam_c.match(str_to_parse):
             #print "exam matched...."        # delete
-            self.parse_exam(str_to_parse, st_id)
-            return "An exam query"
+            return self.parse_exam(str_to_parse, st_id)
         elif class_c.match(str_to_parse):
             #print "class matched...."        # delete
             
@@ -109,8 +106,10 @@ class Parser:
         #print str_to_parse
         vote_c = re.compile(Regexes.VOTE_VALUE)
         vote = vote_c.findall(str_to_parse)
-
-        self.mark_vote_at_course(vote, course_num)
+        speed = int(vote[0])
+        course = int(course_num[0].strip())
+        dic = {'type':'vote', 'speed':speed, 'course':course}
+        return dic
         # # if exist c in course_names
         # course_c = re.compile('|'.join(course_names))
         # if course_c.match(str_to_parse):
@@ -147,10 +146,9 @@ class Parser:
         next_c = re.compile("next")
         #courseNum = None
         if course_matched:
-            courseNum = self.find_course_num(course_matched)
-            timeAndPlace = self.find_exam_time_place(courseNum)
-            # return the course_name that appears
-            pass
+            course_num = self.find_course_num(course_matched)
+            return {'type':'exam', 'course':course_num}
+        
         elif next_c.match(str_to_parse):
             pass
             #TODO later, dealing with times
@@ -170,9 +168,8 @@ class Parser:
         next_c = re.compile("next")
         #courseNum = None
         if course_matched:
-            courseNum = self.find_course_num(course_matched)
-            timeAndPlace = self.find_class_time_place(st_id, courseNum)
-            return timeAndPlace
+            course_num = self.find_course_num(course_matched)
+            return {'type':'exam', 'course':course_num}
             # return the course_name that appears
         elif next_c.match(str_to_parse):
             pass

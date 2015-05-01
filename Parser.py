@@ -110,7 +110,7 @@ class Parser:
         vote_c = re.compile(Regexes.VOTE_VALUE)
         vote = vote_c.findall(str_to_parse)
 
-        self.mark_vote_at_course(vote, course_num)
+        return {'type':'vote', 'speed':vote, 'course':course_num}
         # # if exist c in course_names
         # course_c = re.compile('|'.join(course_names))
         # if course_c.match(str_to_parse):
@@ -147,10 +147,9 @@ class Parser:
         next_c = re.compile("next")
         #courseNum = None
         if course_matched:
-            courseNum = self.find_course_num(course_matched)
-            timeAndPlace = self.find_exam_time_place(courseNum)
-            # return the course_name that appears
-            pass
+            course_num = self.find_course_num(course_matched)
+            return {'type':'exam', 'course':course_num}
+        
         elif next_c.match(str_to_parse):
             pass
             #TODO later, dealing with times
@@ -170,9 +169,8 @@ class Parser:
         next_c = re.compile("next")
         #courseNum = None
         if course_matched:
-            courseNum = self.find_course_num(course_matched)
-            timeAndPlace = self.find_class_time_place(st_id, courseNum)
-            return timeAndPlace
+            course_num = self.find_course_num(course_matched)
+            return {'type':'exam', 'course':course_num}
             # return the course_name that appears
         elif next_c.match(str_to_parse):
             pass
